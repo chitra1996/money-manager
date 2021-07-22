@@ -1,5 +1,5 @@
-import { Budget } from "src/budget/budget.entity";
-import { User } from "src/user/user.entity";
+import { Budget } from "../budget/budget.entity";
+import { User } from "../user/user.entity";
 import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
@@ -30,6 +30,18 @@ export class Expense  extends BaseEntity {
     
     @DeleteDateColumn()
     deletedAt: Date;
+}
 
-
+export class ExpenseDTO {
+    constructor(
+        public id: string,
+        public user_id: string,
+        public description: string,
+        public classification: string,
+        public category_id: string,
+        public amount: number,
+        public createdAt?: Date,
+        public deletedAt?: Date,
+        public updatedAt?: Date
+    ) { }
 }

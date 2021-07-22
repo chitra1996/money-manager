@@ -26,3 +26,16 @@ export class User extends BaseEntity {
     @DeleteDateColumn()
     deletedAt: Date;
 }
+
+export class UserDTO {
+    constructor(
+        public id: string,
+        public name: string,
+        public email: string,
+        public password: string,
+        public phone: string,
+        public createdAt?: Date,
+        public deletedAt?: Date,
+        public updatedAt?: Date
+    ) { }
+}

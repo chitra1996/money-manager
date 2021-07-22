@@ -9,6 +9,7 @@ import { UsersModule } from './user/user.module';
 import { User } from './user/user.entity';
 import { Budget } from './budget/budget.entity';
 import { Expense } from './expense/expense.entity';
+import { LoginsModule } from './login/login.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -25,7 +26,7 @@ import { Expense } from './expense/expense.entity';
     ],
     synchronize: true,
     autoLoadEntities: true,
-  }), UsersModule, ExpensesModule, BudgetsModule,],
+  }), UsersModule, ExpensesModule, BudgetsModule, LoginModule],
   controllers: [AppController],
   providers: [],
 })

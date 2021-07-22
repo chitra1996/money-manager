@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  @Post('create')
+  @Post()
   async createuser(
     @Body('name') name: string,
     @Body('email') email: string,
@@ -22,7 +22,7 @@ export class UserController {
     return await this.userService.createUser(payload);
   }
 
-  @Get('/')
+  @Get("/:userId")
   getUser(): string {
     return this.userService.getUser();
   }
