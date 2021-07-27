@@ -103,7 +103,7 @@ This is an application for money management using which user can set the budget 
     - id
     - user_id
     - budget
-    - category
+    - category_name
     - createdAt
     - deletedAt
     - updatedAt
