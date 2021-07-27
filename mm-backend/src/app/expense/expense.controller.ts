@@ -3,7 +3,7 @@ import { ExpenseService } from './expense.service';
 
 @Controller('expense')
 export class ExpenseController {
-  constructor(private readonly expenseService: ExpenseService) { }
+  constructor(private readonly expenseService: ExpenseService) {}
 
   @Post('create')
   async createExpense(
@@ -19,9 +19,8 @@ export class ExpenseController {
       classification,
       category_id,
       amount,
-    }
+    };
     return await this.expenseService.createExpense(payload);
-
   }
 
   @Get('/')

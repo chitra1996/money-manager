@@ -1,47 +1,57 @@
-import { Budget } from "../budget/budget.entity";
-import { User } from "../user/user.entity";
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Budget } from '../budget/budget.entity';
+import { User } from '../user/user.entity';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
-export class Expense  extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: string;
+export class Expense extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: string;
 
-    @ManyToOne(() => User, user => user.id)
-    user_id: string;
+  @ManyToOne(() => User, (user) => user.id)
+  user_id: string;
 
-    @Column()
-    description: string;
+  @Column()
+  description: string;
 
-    @Column()
-    classification: string;
+  @Column()
+  classification: string;
 
-    @ManyToOne(() => Budget, budget => budget.id)
-    category_id: string;
+  @ManyToOne(() => Budget, (budget) => budget.id)
+  category_id: string;
 
-    @Column()
-    amount: number;
+  @Column()
+  amount: number;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
-    
-    @DeleteDateColumn()
-    deletedAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }
 
 export class ExpenseDTO {
-    constructor(
-        public id: string,
-        public user_id: string,
-        public description: string,
-        public classification: string,
-        public category_id: string,
-        public amount: number,
-        public createdAt?: Date,
-        public deletedAt?: Date,
-        public updatedAt?: Date
-    ) { }
+  constructor(
+    public id: string,
+    public user_id: string,
+    public description: string,
+    public classification: string,
+    public category_id: string,
+    public amount: number,
+    public createdAt?: Date,
+    public deletedAt?: Date,
+    public updatedAt?: Date,
+  ) {}
 }

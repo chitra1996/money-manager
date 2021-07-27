@@ -9,15 +9,14 @@ export class BudgetController {
   async createExpense(
     @Headers('user_id') user_id: string,
     @Body('budget') budget: string,
-    @Body('category') category: string
+    @Body('category') category: string,
   ): Promise<any> {
     const payload = {
       user_id,
       budget,
-      category
-    }
+      category,
+    };
     return await this.budgetService.createCategoryBudget(payload);
-
   }
 
   @Get('/')

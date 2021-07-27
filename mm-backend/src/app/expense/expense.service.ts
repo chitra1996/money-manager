@@ -7,11 +7,11 @@ export class ExpenseService {
     let newExpense = Expense.create();
     newExpense = {
       ...newExpense,
-      ...payload
-    }
+      ...payload,
+    };
     return await Expense.save(newExpense);
   }
-  
+
   getExpense(): string {
     return 'Hello World, I am from the expense service!';
   }

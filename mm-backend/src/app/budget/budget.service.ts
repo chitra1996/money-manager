@@ -7,11 +7,11 @@ export class BudgetService {
     let newCategoryBudget = Budget.create();
     newCategoryBudget = {
       ...newCategoryBudget,
-      ...payload
-    }
+      ...payload,
+    };
     return await Budget.save(newCategoryBudget);
   }
-  
+
   getBudget(): string {
     return 'Hello World, I am from the budget service!';
   }
