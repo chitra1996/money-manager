@@ -1,17 +1,29 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { BudgetController } from './budget.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Budget } from './budget.entity';
-import { ValidateExpense } from '../../middlewares/ValidateRequest/ValidateExpense';
+import { ValidateBudget } from '../../middlewares/ValidateBudget';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Budget])],
   controllers: [BudgetController],
   providers: [BudgetService],
 })
-export class BudgetsModule implements NestModule {
+export class BudgetModule implements NestModule {
   async configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ValidateExpense).forRoutes(BudgetController);
+    consumer
+      .apply(ValidateBudget)
+      .exclude(
+        { path: 'budget', method: RequestMethod.GET },
+        { path: 'budget/:user_id', method: RequestMethod.GET },
+        { path: 'budget/:budget_id', method: RequestMethod.DELETE },
+      )
+      .forRoutes(BudgetController);
   }
 }

@@ -11,7 +11,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
       inject: [],
       useFactory: async () => ({
         secret: 'JWT_SECRET',
-        signOptions: { expiresIn: '10000s' },
+        signOptions: { expiresIn: '604800000s' },
       }),
     }),
   ],

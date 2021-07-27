@@ -22,7 +22,7 @@ export class Budget extends BaseEntity {
   budget: number;
 
   @Column()
-  category: string;
+  category_id: string;
 
   @CreateDateColumn()
   createdAt: Date;

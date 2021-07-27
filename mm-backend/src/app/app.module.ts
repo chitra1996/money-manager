@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 
-import { BudgetsModule } from './budget/budget.module';
-import { ExpensesModule } from './expense/expense.module';
+import { AppController } from './app.controller';
+import { BudgetModule } from './budget/budget.module';
+import { ExpenseModule } from './expense/expense.module';
 import { UserModule } from './user/user.module';
 import { User } from './user/user.entity';
 import { Budget } from './budget/budget.entity';
@@ -25,12 +25,11 @@ import { AuthModule } from './auth/auth.module';
       autoLoadEntities: true,
     }),
     UserModule,
-    ExpensesModule,
-    BudgetsModule,
+    ExpenseModule,
+    BudgetModule,
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [],
 })
 export class AppModule {
   constructor(private connection: Connection) {}

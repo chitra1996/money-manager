@@ -8,10 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { User } from './user.entity';
-import { ValidateExpense } from '../../middlewares/ValidateRequest/ValidateExpense';
 import { AuthService } from '../auth/auth.service';
 import { AuthModule } from '../auth/auth.module';
-import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), AuthModule],
