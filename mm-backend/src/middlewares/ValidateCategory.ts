@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-export function ValidateBudget(
+export function ValidateCategory(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -14,8 +14,8 @@ export function ValidateBudget(
     if (!req.body) errorObj.message = 'Request is soulful but without body :(';
     if (!req.body.budget)
       errorObj.message = 'Please give me budget amount to proceed :(';
-    if (!req.body.category_id)
-      errorObj.message = 'I have no idea about the category :(';
+    if (!req.body.category_name)
+      errorObj.message = 'Please give me a name of the category :(';
 
     if (errorObj.message) {
       return res.status(400).json(errorObj);

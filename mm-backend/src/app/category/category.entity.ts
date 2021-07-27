@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Budget extends BaseEntity {
+export class Category extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -22,7 +22,7 @@ export class Budget extends BaseEntity {
   budget: number;
 
   @Column()
-  category_id: string;
+  category_name: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -34,12 +34,12 @@ export class Budget extends BaseEntity {
   deletedAt: Date;
 }
 
-export class BudgetDTO {
+export class CategoryDTO {
   constructor(
     public id: string,
     public user_id: string,
     public budget: number,
-    public category: string,
+    public category_name: string,
     public createdAt?: Date,
     public deletedAt?: Date,
     public updatedAt?: Date,

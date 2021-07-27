@@ -1,4 +1,4 @@
-import { Budget } from '../budget/budget.entity';
+import { Category } from '../category/category.entity';
 import { User } from '../user/user.entity';
 import {
   BaseEntity,
@@ -26,7 +26,7 @@ export class Expense extends BaseEntity {
   @Column()
   classification: string;
 
-  @ManyToOne(() => Budget, (budget) => budget.id)
+  @ManyToOne(() => Category, (category) => category.id)
   category_id: string;
 
   @Column()
