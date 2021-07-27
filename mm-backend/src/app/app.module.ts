@@ -10,16 +10,17 @@ import { User } from './user/user.entity';
 import { Category } from './category/category.entity';
 import { Expense } from './expense/expense.entity';
 import { AuthModule } from './auth/auth.module';
+import {appConfig} from "../config/config";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: appConfig.host,
       port: 3306,
-      username: 'root',
-      password: 'Bestofme@12345',
-      database: 'money_manager',
+      username: appConfig.username,
+      password: appConfig.password,
+      database: appConfig.database,
       entities: [Category, Expense, User],
       synchronize: true,
       autoLoadEntities: true,

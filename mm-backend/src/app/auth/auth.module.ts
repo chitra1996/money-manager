@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { appConfig } from 'src/config/config';
 
 @Module({
   imports: [
@@ -10,7 +11,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
       imports: [],
       inject: [],
       useFactory: async () => ({
-        secret: 'JWT_SECRET',
+        secret: appConfig.jwtSecret,
         signOptions: { expiresIn: '604800000s' },
       }),
     }),

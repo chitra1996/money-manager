@@ -64,7 +64,11 @@ export class UserService {
     try {
       const userData = await User.findOne(user_id);
       for (const key of Object.keys(payload)) {
-        userData[key] = payload[key];
+        if(key === 'password') {
+          userData[key] = await this.authService.hashPassword(payload[key]);
+        } else {
+          userData[key] = payload[key];
+        }
       }
       const updatedUserData = await User.save(userData);
       return this.buildUserResponse(updatedUserData);

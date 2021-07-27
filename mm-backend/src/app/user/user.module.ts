@@ -23,6 +23,7 @@ export class UserModule implements NestModule {
       .apply()
       .exclude(
         { path: 'user/login', method: RequestMethod.POST },
+        { path: 'user/logout', method: RequestMethod.POST },
         { path: 'user', method: RequestMethod.GET },
         { path: 'user/:user_id', method: RequestMethod.GET },
         { path: 'user/:user_id', method: RequestMethod.DELETE },
