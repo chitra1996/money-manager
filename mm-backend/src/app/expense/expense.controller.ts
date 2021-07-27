@@ -1,14 +1,18 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
-  Headers,
+  Param,
   Post,
+  Put,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { IExpenseResponse } from './expense.interface';
 import { ExpenseService } from './expense.service';
 
 @UseGuards(JwtAuthGuard)
@@ -38,8 +42,49 @@ export class ExpenseController {
     }
   }
 
-  @Get('/')
-  getExpense(): string {
-    return this.expenseService.getExpense();
+  @Get()
+  async getExpenseByExpenseId(
+    @Query('expense_id') expense_id: string
+  ): Promise<IExpenseResponse> {
+    try {
+      return await this.expenseService.getExpenseByExpenseId(expense_id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Get('/:user_id')
+  async getExpenseByUserId(
+    @Param('user_id') user_id: string
+  ): Promise<IExpenseResponse[]> {
+    try {
+      return await this.expenseService.getExpenseByUserId(user_id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Put('/:expense_id')
+  async updateExpenseByExpenseId(
+    @Param('expense_id') expense_id: string,
+    @Req() req: Request
+  ): Promise<IExpenseResponse> {
+    try {
+      const payload = req.body;
+      return await this.expenseService.updateExpenseByExpenseId(expense_id, payload);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Delete('/:expense_id')
+  async deleteExpenseByExpenseId(
+    @Param('expense_id') user_id: string,
+  ): Promise<IExpenseResponse> {
+    try {
+      return await this.expenseService.deleteExpenseByExpenseId(user_id);
+    } catch (error) {
+      throw error;
+    }
   }
 }
