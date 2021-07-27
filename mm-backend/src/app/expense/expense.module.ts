@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { ExpenseController } from './expense.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,12 +18,12 @@ import { ValidateExpense } from '../../middlewares/ValidateExpense';
 export class ExpenseModule implements NestModule {
   async configure(consumer: MiddlewareConsumer) {
     consumer
-    .apply(ValidateExpense)
-    .exclude(
-      { path: 'expense', method: RequestMethod.GET },
-      { path: 'expense/:user_id', method: RequestMethod.GET },
-      { path: 'expense/:expense_id', method: RequestMethod.DELETE },
-    )
-    .forRoutes(ExpenseController);
+      .apply(ValidateExpense)
+      .exclude(
+        { path: 'expense', method: RequestMethod.GET },
+        { path: 'expense/:user_id', method: RequestMethod.GET },
+        { path: 'expense/:expense_id', method: RequestMethod.DELETE },
+      )
+      .forRoutes(ExpenseController);
   }
 }

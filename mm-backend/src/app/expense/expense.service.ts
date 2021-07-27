@@ -7,9 +7,12 @@ export class ExpenseService {
   async createExpense(payload: any): Promise<IExpenseResponse> {
     try {
       const expenseData = await Expense.save(payload);
-      return this.buildExpenseResponse(expenseData)
+      return this.buildExpenseResponse(expenseData);
     } catch (error) {
-      throw new HttpException(`Expense data could not be stored in DB. Error: ${error}`, 500);
+      throw new HttpException(
+        `Expense data could not be stored in DB. Error: ${error}`,
+        500,
+      );
     }
   }
 
@@ -18,24 +21,33 @@ export class ExpenseService {
       const expenseData = await Expense.findOne(expense_id);
       return this.buildExpenseResponse(expenseData);
     } catch (error) {
-      throw new HttpException(`Expense data could not be found in DB. Error: ${error}`, 500);
+      throw new HttpException(
+        `Expense data could not be found in DB. Error: ${error}`,
+        500,
+      );
     }
   }
 
   async getExpenseByUserId(user_id: string): Promise<IExpenseResponse[]> {
     try {
-      const expenseDataArray = await Expense.find({user_id});
+      const expenseDataArray = await Expense.find({ user_id });
       let expenseResponseArray = [];
       for (const expenseData of expenseDataArray) {
         expenseResponseArray.push(this.buildExpenseResponse(expenseData));
       }
       return expenseResponseArray;
     } catch (error) {
-      throw new HttpException(`Expense data could not be found in DB. Error: ${error}`, 500);
+      throw new HttpException(
+        `Expense data could not be found in DB. Error: ${error}`,
+        500,
+      );
     }
   }
 
-  async updateExpenseByExpenseId(expense_id: string, payload: any): Promise<IExpenseResponse> {
+  async updateExpenseByExpenseId(
+    expense_id: string,
+    payload: any,
+  ): Promise<IExpenseResponse> {
     try {
       const expenseData = await Expense.findOne(expense_id);
       for (const key of Object.keys(payload)) {
@@ -44,7 +56,10 @@ export class ExpenseService {
       const updatedExpenseData = await Expense.save(expenseData);
       return this.buildExpenseResponse(updatedExpenseData);
     } catch (error) {
-      throw new HttpException(`Expense data could not be found in DB. Error: ${error}`, 500);
+      throw new HttpException(
+        `Expense data could not be updated in DB. Error: ${error}`,
+        500,
+      );
     }
   }
 
@@ -61,7 +76,10 @@ export class ExpenseService {
         };
       }
     } catch (error) {
-      throw new HttpException(`Expense data could not be found in DB. Error: ${error}`, 500);
+      throw new HttpException(
+        `Expense data could not be deleted from DB. Error: ${error}`,
+        500,
+      );
     }
   }
 

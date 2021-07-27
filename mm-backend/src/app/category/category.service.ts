@@ -1,7 +1,4 @@
-import {
-  HttpException,
-  Injectable,
-} from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Category } from './category.entity';
 import { ICategoryResponse } from './category.interface';
 
@@ -19,7 +16,10 @@ export class CategoryService {
       const categoryData = await Category.save(categoryPayload);
       return this.buildCategoryResponse(categoryData);
     } catch (error) {
-      throw new HttpException(`Category data could not be stored in DB. Error: ${error}`, 500);
+      throw new HttpException(
+        `Category data could not be stored in DB. Error: ${error}`,
+        500,
+      );
     }
   }
 

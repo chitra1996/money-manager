@@ -1,17 +1,5 @@
-import {
-  Delete,
-  Param,
-  Put,
-  Query,
-  Req,
-} from '@nestjs/common';
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Delete, Param, Put, Query, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ICategoryRequest, ICategoryResponse } from './category.interface';
@@ -35,7 +23,7 @@ export class CategoryController {
       };
       return await this.categoryService.createCategoryCategory(
         payload,
-        req.user['id'],
+        req.user['user_id'],
       );
     } catch (error) {
       throw error;
@@ -71,7 +59,10 @@ export class CategoryController {
   ): Promise<ICategoryResponse> {
     try {
       const payload = req.body;
-      return await this.categoryService.updateCategorysById(category_id, payload);
+      return await this.categoryService.updateCategorysById(
+        category_id,
+        payload,
+      );
     } catch (error) {
       throw error;
     }

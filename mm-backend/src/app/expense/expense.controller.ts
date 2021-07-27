@@ -30,7 +30,7 @@ export class ExpenseController {
   ): Promise<any> {
     try {
       const payload = {
-        user_id: req.user['id'],
+        user_id: req.user['user_id'],
         description,
         classification,
         category_id,
@@ -44,7 +44,7 @@ export class ExpenseController {
 
   @Get()
   async getExpenseByExpenseId(
-    @Query('expense_id') expense_id: string
+    @Query('expense_id') expense_id: string,
   ): Promise<IExpenseResponse> {
     try {
       return await this.expenseService.getExpenseByExpenseId(expense_id);
@@ -55,7 +55,7 @@ export class ExpenseController {
 
   @Get('/:user_id')
   async getExpenseByUserId(
-    @Param('user_id') user_id: string
+    @Param('user_id') user_id: string,
   ): Promise<IExpenseResponse[]> {
     try {
       return await this.expenseService.getExpenseByUserId(user_id);
@@ -67,11 +67,14 @@ export class ExpenseController {
   @Put('/:expense_id')
   async updateExpenseByExpenseId(
     @Param('expense_id') expense_id: string,
-    @Req() req: Request
+    @Req() req: Request,
   ): Promise<IExpenseResponse> {
     try {
       const payload = req.body;
-      return await this.expenseService.updateExpenseByExpenseId(expense_id, payload);
+      return await this.expenseService.updateExpenseByExpenseId(
+        expense_id,
+        payload,
+      );
     } catch (error) {
       throw error;
     }

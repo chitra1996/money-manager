@@ -21,7 +21,12 @@ export class UserModule implements NestModule {
   async configure(consumer: MiddlewareConsumer) {
     consumer
       .apply()
-      .exclude({ path: 'user/login', method: RequestMethod.POST })
+      .exclude(
+        { path: 'user/login', method: RequestMethod.POST },
+        { path: 'user', method: RequestMethod.GET },
+        { path: 'user/:user_id', method: RequestMethod.GET },
+        { path: 'user/:user_id', method: RequestMethod.DELETE },
+      )
       .forRoutes(UserController);
   }
 }
