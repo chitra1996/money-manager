@@ -38,7 +38,6 @@ class Login extends React.Component {
 
                 <img style={{
                     width: "100%",
-
                     position: 'absolute',
                     bottom: -60
                 }} alt="LOGO" src={login_decor_bottom} />

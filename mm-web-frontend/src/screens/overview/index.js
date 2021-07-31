@@ -21,7 +21,7 @@ class Overview extends React.Component {
   }
 
   render() {
-    let tableRows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let tableRows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 22];
     return (
       <div
         style={{
@@ -71,6 +71,7 @@ class Overview extends React.Component {
           style={{
             ...rowFlex,
             flex: 11,
+           
           }}
         >
           <div
@@ -78,15 +79,19 @@ class Overview extends React.Component {
               display: "flex",
               flex: 1,
               justifyContent: "center",
-              padding: "10px 10px",
+              height: "90vh",
+              
             }}
           >
             <div
               style={{
                 width: "100%",
+                
                 backgroundColor: "#fff",
                 borderRadius: "8px",
-                overflowY: "scroll"
+                overflow: 'hidden',
+              
+
               }}
             >
               <Table
@@ -94,39 +99,59 @@ class Overview extends React.Component {
                 style={{
                   margin: "10pt",
                   width: "96%",
+                  paddingBottom: 20
+                  // backgroundColor:'red'
                 }}
               >
-                <thead>
-                  <tr align={"center"}>
-                    <th width="5%">Date</th>
-                    <th width="10%">Category</th>
-                    <th width="75%">Description</th>
-                    <th align={"left"} width="10%">
-                      Amount
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tableRows.map((i) => {
-                    return (
-                      <tr
-                        align={"center"}
-                        style={{
-                          backgroundColor:
-                            i % 2 == 0 ? colors.bgRed : colors.bgGreen,
-                          color: colors.textBlack,
-                        }}
-                      >
-                        <td width="5%">22/07</td>
-                        <td width="10%">Groceries</td>
-                        <td width="75%">Rice, Sugar</td>
-                        <td align={"left"} width="10%">
-                          ₹323/-
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+                <div>
+                  <thead>
+                    <tr align={"center"}>
+                      <th width="5%">Date</th>
+                      <th width="10%">Category</th>
+                      <th width="75%">Description</th>
+                      <th align={"left"} width="10%">
+                        Amount
+                      </th>
+                    </tr>
+                  </thead>
+                </div>
+                <div
+                  style={{
+                    // display: 'block',
+                    maxHeight: '80vh',
+                    overflowY: 'scroll',
+                    width: '100%'
+
+                  }}
+                >
+                  <tbody
+
+                  >
+
+                    {tableRows.map((i) => {
+                      return (
+                        <tr
+                          align={"center"}
+                          style={{
+                            width: '100%',
+                            backgroundColor:
+                              i % 2 == 0 ? colors.bgRed : colors.bgGreen,
+                            color: colors.textBlack,
+                          }}
+                        >
+                          <td width="5%">{i}</td>
+                          <td width="10%">Groceries</td>
+                          <td width="75%">Rice, Sugar</td>
+                          <td align={"left"} width="10%">
+                            ₹323/-
+                          </td>
+                        </tr>
+                      );
+                    })}
+
+                  </tbody>
+                </div>
+                
               </Table>
             </div>
           </div>
@@ -344,7 +369,7 @@ class Overview extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
