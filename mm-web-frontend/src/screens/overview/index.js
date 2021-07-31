@@ -3,6 +3,7 @@ import { Form, Table } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { colors } from "../../assets/css/colors";
 import { Button } from "../../components";
+import ApiCall from "../../services/httpService";
 
 const columnFlex = {
   display: "flex",
@@ -18,6 +19,15 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+
+  async componentDidMount() {
+    // const apiCall = new ApiCall();
+    // const result = await apiCall.sendRequest({
+    //   url: 'health',
+    //   method: 'get'
+    // })
+    // console.log(result)
   }
 
   render() {
@@ -361,7 +371,7 @@ class Overview extends React.Component {
                         padding: "0 10px",
                       }}
                     >
-                      <Button payload={this.state.loginPayload} />
+                      <Button payload={this.state.loginPayload}  title={"SUBMIT ➔"}/>
                     </div>
                   </div>
                 </Form>
