@@ -10,7 +10,7 @@ import { User } from './user/user.entity';
 import { Category } from './category/category.entity';
 import { Expense } from './expense/expense.entity';
 import { AuthModule } from './auth/auth.module';
-import {appConfig} from "../config/config";
+import { appConfig } from "../config/config";
 
 @Module({
   imports: [
@@ -33,5 +33,5 @@ import {appConfig} from "../config/config";
   controllers: [AppController],
 })
 export class AppModule {
-  constructor(private connection: Connection) {}
+  constructor(private connection: Connection) { }
 }
