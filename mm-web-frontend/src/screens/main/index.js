@@ -27,7 +27,6 @@ class Main extends React.Component {
                     backgroundColor: "#fff",
                     zIndex: 1,
                     ...shadowStyle,
-                    borderRadius: 0
                 }}>
                     NavBar
                 </div>

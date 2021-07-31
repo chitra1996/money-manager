@@ -29,11 +29,7 @@ const headerStyle = {
 }
 
 const shadowStyle = {
-    // boxShadow: "#707070 3px 3px 18px 2px",
-    // boxShadow: "#eee 8px 7px 12px 0px",
-    boxShadow: "0 4px 8px 8px rgb(0 0 0 / 20%)",
-
-
+    boxShadow: "rgb(0 0 0 / 20%) 0px 4px 8px 8px",
     borderRadius: 8
 }
 
