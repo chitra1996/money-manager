@@ -23,7 +23,7 @@ class Main extends React.Component {
                 <div style={{
                     display: "flex",
                     flexDirection: "column",
-                    flex: 1,
+                    flex: 1.5,
                     backgroundColor: "#fff",
                     zIndex: 1,
                     ...shadowStyle,

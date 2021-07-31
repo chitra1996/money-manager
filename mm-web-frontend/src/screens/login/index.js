@@ -35,11 +35,12 @@ class Login extends React.Component {
                     position: 'absolute',
                     top: 0
                 }} alt="LOGO" src={login_decor} />
-                
+
                 <img style={{
                     width: "100%",
+
                     position: 'absolute',
-                    bottom: 0
+                    bottom: -60
                 }} alt="LOGO" src={login_decor_bottom} />
 
                 <div style={{
@@ -55,6 +56,7 @@ class Login extends React.Component {
                     width: "25%",
                     backgroundColor: "#fff",
                     zIndex: 1,
+                    marginTop: "100px",
                     ...shadowStyle
                 }}>
                     <Form style={{
