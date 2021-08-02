@@ -51,6 +51,7 @@ class ExpenseTable extends React.Component {
             <tbody>
               {expenses.length > 0
                 ? expenses.map((expense) => {
+                  console.log(expense)
                     return (
                       <tr
                         key={expense.expense_id}

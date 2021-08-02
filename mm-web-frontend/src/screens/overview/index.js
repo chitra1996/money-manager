@@ -111,11 +111,11 @@ class Overview extends React.Component {
               flex: 1,
             }}
           >
-            {/* EXPENSE ADDITION FORM */}
-            <ExpenseForm categories={categories} />
-
             {/* EXPENSE GRAPHS */}
             <ExpenseGraph />
+
+            {/* EXPENSE ADDITION FORM */}
+            <ExpenseForm categories={categories} />
           </div>
         </div>
       </div>

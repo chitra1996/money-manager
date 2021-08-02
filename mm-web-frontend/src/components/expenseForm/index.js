@@ -108,9 +108,9 @@ class ExpenseForm extends React.Component {
                       }
                       id="input-group-dropdown-1"
                       variant="outline-secondary"
-                      size="md"
                       onSelect={(e) => {
                         const newE = JSON.parse(e);
+                        console.log(newE.category_id)
                         this.setState((prevState) => ({
                           expensePayload: {
                             ...prevState.expensePayload,
@@ -118,9 +118,6 @@ class ExpenseForm extends React.Component {
                           },
                           selectedCategory: newE.category_name,
                         }));
-                      }}
-                      style={{
-                        backgroundColor: "transparent"
                       }}
                     >
                       {categories.map((category) => {
@@ -183,11 +180,13 @@ class ExpenseForm extends React.Component {
                   >
                     <DatePicker
                       onChange={(date) => {
+                        console.log(date)
                         this.setState((prevState) => ({
                           expensePayload: {
                             ...prevState.expensePayload,
                             expense_date: date,
                           },
+                          selectedDate: date
                         }));
                       }}
                       value={this.state.selectedDate}
