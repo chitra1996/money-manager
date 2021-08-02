@@ -69,7 +69,7 @@ class ExpenseTable extends React.Component {
                       >
                         <td width="5%">
                           {expense.createdAt
-                            ? new Date(expense.createdAt).toLocaleDateString()
+                            ? new Date(expense.expense_date).toLocaleDateString()
                             : null}
                         </td>
                         <td width="10%">{expense.classification}</td>

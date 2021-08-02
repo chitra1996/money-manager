@@ -28,3 +28,20 @@ label {
   width: 100%;
   padding: 0 10px;
 }
+
+.react-date-picker__wrapper {
+  border: transparent !important;
+}
+
+.react-date-picker,
+.react-date-picker--closed,
+.react-date-picker--enabled {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#input-group-dropdown-1 {
+  width: 100%;
+  text-align: left;
+  border: 1px solid #ced4da;
+}

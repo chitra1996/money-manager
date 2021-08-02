@@ -1,4 +1,8 @@
-const inititalState = {};
+const inititalState = {
+  authToken: "",
+  userId: "",
+  expenses: ""
+};
 
 function reducer(state = inititalState, action) {
   switch (action.type) {
@@ -26,9 +30,6 @@ function reducer(state = inititalState, action) {
 }
 
 function mapStateToProps(state = inititalState) {
-  console.log({
-    mapStateToProps: state,
-  });
   return state;
 }
 

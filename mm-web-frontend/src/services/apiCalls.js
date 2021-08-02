@@ -3,7 +3,6 @@ import ApiCall from "./httpService";
 
 const apiCall = new ApiCall();
 
-
 function* createExpense(action) {
   try {
     const userData = yield apiCall.sendRequest({
@@ -52,11 +51,24 @@ async function getAllExpenses(userId, authToken) {
       },
     });
     return expenseData;
-    // yield put({ type: "EXPENSES_FETCH_SUCCESS", value: expenseData.data });
   } catch (error) {
-    // yield put({ type: "EXPENSES_FETCH_FAILED" });
     throw error;
   }
 }
 
-export { loginUser, getAllExpenses, createExpense };
+async function getAllCategory(userId, authToken) {
+  try {
+    const categoryData = await apiCall.sendRequest({
+      url: `category/${userId}`,
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    return categoryData;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export { loginUser, getAllExpenses, createExpense, getAllCategory };

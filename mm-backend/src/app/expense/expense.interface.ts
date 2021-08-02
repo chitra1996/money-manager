@@ -14,4 +14,5 @@ export interface IExpenseResponse {
   amount: number;
   createdAt: Date;
   updatedAt: Date;
+  expense_date: Date;
 }

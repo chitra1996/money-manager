@@ -1,15 +1,32 @@
 import React from "react";
 import { colors } from "../../assets/css/colors";
-import { Form } from "react-bootstrap";
+import { Dropdown, DropdownButton, Form } from "react-bootstrap";
 import { Button } from "../../components";
+import { connect } from "react-redux";
+import { mapStateToProps } from "../../redux/reducers/reducer";
+import DatePicker from "react-date-picker";
 
 class ExpenseForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      authToken: "",
+      userId: "",
+      selectedCategory: null,
+      selectedDate: new Date(),
+    };
+  }
+
+  async componentDidMount() {
+    this.setState({
+      authToken: localStorage.getItem("authToken"),
+      userId: localStorage.getItem("userId"),
+    });
   }
 
   render() {
+    const { categories } = this.props;
+
     return (
       <div
         style={{
@@ -59,82 +76,10 @@ class ExpenseForm extends React.Component {
                   flexDirection: "row",
                 }}
               >
-                <Form.Group
-                  style={{ width: "100%" }}
-                  controlId="formBasicEmail"
-                >
-                  <Form.Label>Select Date</Form.Label>
-                  <Form.Control
-                    placeholder="DD/MM/YYYY"
-                    type="text"
-                    name="expenseDate"
-                    onChange={(e) => {
-                      this.setState((prevState) => ({
-                        expensePayload: {
-                          ...prevState.expensePayload,
-                          expenseDate: e.target.value,
-                        },
-                      }));
-                    }}
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group
-                  style={{ width: "100%" }}
-                  controlId="formBasicEmail"
-                >
-                  <Form.Label>Enter Amount</Form.Label>
-                  <Form.Control
-                    placeholder="Enter Amount"
-                    type="text"
-                    name="amount"
-                    onChange={(e) => {
-                      this.setState((prevState) => ({
-                        expensePayload: {
-                          ...prevState.expensePayload,
-                          amount: e.target.value,
-                        },
-                      }));
-                    }}
-                    required
-                  />
-                </Form.Group>
-              </div>
-
-              <div
-                style={{
-                  flex: "1",
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-                <Form.Group
-                  style={{ width: "100%" }}
-                  controlId="formBasicPassword"
-                >
-                  <Form.Label>Category</Form.Label>
-                  <Form.Control
-                    placeholder="Select"
-                    type="text"
-                    name="category_id"
-                    onChange={(e) => {
-                      this.setState((prevState) => ({
-                        expensePayload: {
-                          ...prevState.expensePayload,
-                          category_id: e.target.value,
-                        },
-                      }));
-                    }}
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group
-                  style={{ width: "100%" }}
-                  controlId="formBasicPassword"
-                >
-                  <Form.Label>Classification</Form.Label>
+                <Form.Group controlId="classification">
+                  <Form.Label>
+                    Classification<sup>*</sup>
+                  </Form.Label>
                   <Form.Control
                     placeholder="Select"
                     type="text"
@@ -147,17 +92,115 @@ class ExpenseForm extends React.Component {
                         },
                       }));
                     }}
-                    required
                   />
+                </Form.Group>
+
+                <Form.Group style={{ width: "100%" }}>
+                  <Form.Label>
+                    Category<sup>*</sup>
+                  </Form.Label>
+                  <div>
+                    <DropdownButton
+                      title={
+                        this.state.selectedCategory
+                          ? this.state.selectedCategory
+                          : "Category"
+                      }
+                      id="input-group-dropdown-1"
+                      variant="outline-secondary"
+                      size="md"
+                      onSelect={(e) => {
+                        const newE = JSON.parse(e);
+                        this.setState((prevState) => ({
+                          expensePayload: {
+                            ...prevState.expensePayload,
+                            category_id: newE.category_id,
+                          },
+                          selectedCategory: newE.category_name,
+                        }));
+                      }}
+                      style={{
+                        backgroundColor: "transparent"
+                      }}
+                    >
+                      {categories.map((category) => {
+                        return (
+                          <Dropdown.Item eventKey={JSON.stringify(category)}>
+                            {category.category_name}
+                          </Dropdown.Item>
+                        );
+                      })}
+                    </DropdownButton>
+                  </div>
+                </Form.Group>
+              </div>
+
+              <div
+                style={{
+                  flex: "1",
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <Form.Group style={{ width: "100%" }} controlId="Amount">
+                  <Form.Label>
+                    Enter Amount<sup>*</sup>
+                  </Form.Label>
+                  <Form.Control
+                    placeholder="Enter Amount"
+                    type="text"
+                    name="amount"
+                    onChange={(e) => {
+                      this.setState((prevState) => ({
+                        expensePayload: {
+                          ...prevState.expensePayload,
+                          amount: e.target.value,
+                        },
+                      }));
+                    }}
+                  />
+                </Form.Group>
+
+                <Form.Group style={{ width: "100%" }} controlId="expenseDate">
+                  <Form.Label>Select Date</Form.Label>
+                  <div
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      height: "calc(1.5em + .75rem + 2px)",
+                      padding: ".375rem .75rem",
+                      fontSize: "1rem",
+                      fontWeight: "400",
+                      lineHeight: "1.5",
+                      color: "#495057",
+                      backgroundColor: "#fff",
+                      backgroundClip: "padding-box",
+                      border: "1px solid #ced4da",
+                      borderRadius: ".25rem",
+                      transition:
+                        "borderColor .15s ease-in-out,boxShadow .15s ease-in-out",
+                    }}
+                  >
+                    <DatePicker
+                      onChange={(date) => {
+                        this.setState((prevState) => ({
+                          expensePayload: {
+                            ...prevState.expensePayload,
+                            expense_date: date,
+                          },
+                        }));
+                      }}
+                      value={this.state.selectedDate}
+                    />
+                  </div>
                 </Form.Group>
               </div>
 
               <div>
-                <Form.Group
-                  style={{ width: "100%" }}
-                  controlId="formBasicPassword"
-                >
-                  <Form.Label>Description</Form.Label>
+                <Form.Group style={{ width: "100%" }} controlId="description">
+                  <Form.Label>
+                    Description<sup>*</sup>
+                  </Form.Label>
                   <Form.Control
                     placeholder="Enter description here"
                     type="text"
@@ -170,7 +213,6 @@ class ExpenseForm extends React.Component {
                         },
                       }));
                     }}
-                    required
                   />
                 </Form.Group>
               </div>
@@ -204,4 +246,4 @@ class ExpenseForm extends React.Component {
   }
 }
 
-export default ExpenseForm;
+export default connect(mapStateToProps)(ExpenseForm);

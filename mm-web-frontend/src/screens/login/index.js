@@ -24,27 +24,6 @@ class Login extends React.Component {
     };
   }
 
-  // goToMainScreen() {
-  //   this.props.history.push("main");
-  // }
-
-  // loginUser = async (payload) => {
-  //   try {
-  //     const userData = await loginUser(payload);
-  //     if (userData.data && userData.data.authToken) {
-  //       this.props.dispatch({
-  //         type: "LOGIN_SUCCESS",
-  //         data: userData.data,
-  //       });
-  //       this.props.history.push("main");
-  //     }
-  //   } catch (error) {
-  //     this.props.dispatch({
-  //       type: "LOGIN_FAILED",
-  //     });
-  //   }
-  // };
-
   render() {
     return (
       <div
