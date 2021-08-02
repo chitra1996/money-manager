@@ -30,7 +30,7 @@ export class ExpenseService {
 
   async getExpenseByUserId(user_id: string): Promise<IExpenseResponse[]> {
     try {
-      const expenseDataArray = await Expense.find({ user_id });
+      const expenseDataArray = await Expense.find({ user_id })
       let expenseResponseArray = [];
       for (const expenseData of expenseDataArray) {
         expenseResponseArray.push(this.buildExpenseResponse(expenseData));

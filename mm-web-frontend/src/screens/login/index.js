@@ -9,17 +9,41 @@ import login_decor_bottom from "../../assets/svg/login_decor_bottom.svg";
 import { colors } from "../../assets/css/colors";
 import { connect } from "react-redux";
 import { mapStateToProps } from "../../redux/reducers/reducer";
+import ApiCall from "../../services/httpService";
+import { loginUser } from "../../services/apiCalls";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      authToken: "",
       loginPayload: {
-        username: "",
-        password: "",
+        userEmail: "emailnewnew",
+        password: "password",
       },
     };
   }
+
+  // goToMainScreen() {
+  //   this.props.history.push("main");
+  // }
+
+  // loginUser = async (payload) => {
+  //   try {
+  //     const userData = await loginUser(payload);
+  //     if (userData.data && userData.data.authToken) {
+  //       this.props.dispatch({
+  //         type: "LOGIN_SUCCESS",
+  //         data: userData.data,
+  //       });
+  //       this.props.history.push("main");
+  //     }
+  //   } catch (error) {
+  //     this.props.dispatch({
+  //       type: "LOGIN_FAILED",
+  //     });
+  //   }
+  // };
 
   render() {
     return (
@@ -120,7 +144,6 @@ class Login extends React.Component {
                       },
                     }));
                   }}
-                  placeholder="User Name"
                   required
                 />
               </Form.Group>
@@ -141,7 +164,6 @@ class Login extends React.Component {
                       },
                     }));
                   }}
-                  placeholder="Password"
                   required
                 />
               </Form.Group>
@@ -150,7 +172,10 @@ class Login extends React.Component {
                 onClick={() => {
                   this.props.dispatch({
                     type: "LOGGING_IN_USER",
-                    payload: this.state.loginPayload,
+                    payload: {
+                      loginPayload: this.state.loginPayload,
+                      history: this.props.history,
+                    },
                   });
                 }}
               />

@@ -1,9 +1,12 @@
 import React from "react";
 import { Form, Table } from "react-bootstrap";
+import { connect } from "react-redux";
+import { mapStateToProps } from "../../redux/reducers/reducer";
 import { withRouter } from "react-router-dom";
 import { colors } from "../../assets/css/colors";
 import { Button } from "../../components";
 import ApiCall from "../../services/httpService";
+import { getAllExpenses } from "../../services/apiCalls";
 
 const columnFlex = {
   display: "flex",
@@ -18,20 +21,44 @@ const rowFlex = {
 class Overview extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      expenses: [],
+    };
   }
 
   async componentDidMount() {
-    // const apiCall = new ApiCall();
-    // const result = await apiCall.sendRequest({
-    //   url: 'health',
-    //   method: 'get'
-    // })
-    // console.log(result)
+    this.state.authToken = localStorage.getItem("authToken");
+    this.state.userId = localStorage.getItem("userId");
+    if (!this.state.authToken) {
+      this.props.history.push("/");
+    }
+    return await this.getAllExpenses();
   }
 
+  getAllExpenses = async () => {
+    try {
+      const userData = await getAllExpenses(
+        this.state.userId,
+        this.state.authToken
+      );
+      if (userData.data) {
+        this.setState({
+          expenses: userData.data,
+        });
+        this.props.dispatch({
+          type: "SET_EXPENSES",
+          expenses: userData.data
+        })
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
-    let tableRows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 22];
+    const { expenses = [] } = this.props;
+    console.log("expensessaga", expenses);
+
     return (
       <div
         style={{
@@ -81,7 +108,6 @@ class Overview extends React.Component {
           style={{
             ...rowFlex,
             flex: 11,
-           
           }}
         >
           <div
@@ -90,18 +116,16 @@ class Overview extends React.Component {
               flex: 1,
               justifyContent: "center",
               height: "90vh",
-              
             }}
           >
             <div
               style={{
-                width: "100%",
-                
                 backgroundColor: "#fff",
                 borderRadius: "8px",
-                overflow: 'hidden',
-              
-
+                overflow: "hidden",
+                maxHeight: "80vh",
+                overflowY: "scroll",
+                width: "100%",
               }}
             >
               <Table
@@ -109,59 +133,56 @@ class Overview extends React.Component {
                 style={{
                   margin: "10pt",
                   width: "96%",
-                  paddingBottom: 20
-                  // backgroundColor:'red'
+                  paddingBottom: 20,
                 }}
               >
-                <div>
-                  <thead>
-                    <tr align={"center"}>
-                      <th width="5%">Date</th>
-                      <th width="10%">Category</th>
-                      <th width="75%">Description</th>
-                      <th align={"left"} width="10%">
-                        Amount
-                      </th>
-                    </tr>
-                  </thead>
-                </div>
-                <div
-                  style={{
-                    // display: 'block',
-                    maxHeight: '80vh',
-                    overflowY: 'scroll',
-                    width: '100%'
+                <thead>
+                  <tr key={"title"} align={"center"}>
+                    <th width="5%">Date</th>
+                    <th width="10%">Classification</th>
+                    <th width="75%">Description</th>
+                    <th align={"left"} width="10%">
+                      Amount
+                    </th>
+                  </tr>
+                </thead>
 
-                  }}
-                >
-                  <tbody
-
-                  >
-
-                    {tableRows.map((i) => {
-                      return (
-                        <tr
-                          align={"center"}
-                          style={{
-                            width: '100%',
-                            backgroundColor:
-                              i % 2 == 0 ? colors.bgRed : colors.bgGreen,
-                            color: colors.textBlack,
-                          }}
-                        >
-                          <td width="5%">{i}</td>
-                          <td width="10%">Groceries</td>
-                          <td width="75%">Rice, Sugar</td>
-                          <td align={"left"} width="10%">
-                            ₹323/-
-                          </td>
-                        </tr>
-                      );
-                    })}
-
-                  </tbody>
-                </div>
-                
+                <tbody>
+                  {expenses.length > 0
+                    ? expenses.map((expense) => {
+                        return (
+                          <tr
+                            key={expense.expense_id}
+                            align={"center"}
+                            style={{
+                              width: "100%",
+                              backgroundColor: ["CREDIT", "REFUND"].includes(
+                                expense.classification
+                                  ? expense.classification.toUpperCase()
+                                  : null
+                              )
+                                ? colors.bgGreen
+                                : colors.bgRed,
+                              color: colors.textBlack,
+                            }}
+                          >
+                            <td width="5%">
+                              {expense.createdAt
+                                ? new Date(
+                                    expense.createdAt
+                                  ).toLocaleDateString()
+                                : null}
+                            </td>
+                            <td width="10%">{expense.classification}</td>
+                            <td width="75%">{expense.description}</td>
+                            <td align={"left"} width="10%">
+                              ₹{expense.amount}
+                            </td>
+                          </tr>
+                        );
+                      })
+                    : null}
+                </tbody>
               </Table>
             </div>
           </div>
@@ -215,7 +236,6 @@ class Overview extends React.Component {
               >
                 <Form
                   style={{
-                    width: "25%",
                     backgroundColor: "white",
                     borderRadius: "4pt",
                     padding: "10pt",
@@ -258,8 +278,8 @@ class Overview extends React.Component {
                           name="expenseDate"
                           onChange={(e) => {
                             this.setState((prevState) => ({
-                              loginPayload: {
-                                ...prevState.loginPayload,
+                              expensePayload: {
+                                ...prevState.expensePayload,
                                 expenseDate: e.target.value,
                               },
                             }));
@@ -279,8 +299,8 @@ class Overview extends React.Component {
                           name="amount"
                           onChange={(e) => {
                             this.setState((prevState) => ({
-                              loginPayload: {
-                                ...prevState.loginPayload,
+                              expensePayload: {
+                                ...prevState.expensePayload,
                                 amount: e.target.value,
                               },
                             }));
@@ -304,13 +324,13 @@ class Overview extends React.Component {
                         <Form.Label>Category</Form.Label>
                         <Form.Control
                           placeholder="Select"
-                          type="password"
-                          name="category"
+                          type="text"
+                          name="category_id"
                           onChange={(e) => {
                             this.setState((prevState) => ({
-                              loginPayload: {
-                                ...prevState.loginPayload,
-                                category: e.target.value,
+                              expensePayload: {
+                                ...prevState.expensePayload,
+                                category_id: e.target.value,
                               },
                             }));
                           }}
@@ -325,12 +345,12 @@ class Overview extends React.Component {
                         <Form.Label>Classification</Form.Label>
                         <Form.Control
                           placeholder="Select"
-                          type="password"
+                          type="text"
                           name="classification"
                           onChange={(e) => {
                             this.setState((prevState) => ({
-                              loginPayload: {
-                                ...prevState.loginPayload,
+                              expensePayload: {
+                                ...prevState.expensePayload,
                                 classification: e.target.value,
                               },
                             }));
@@ -348,12 +368,12 @@ class Overview extends React.Component {
                         <Form.Label>Description</Form.Label>
                         <Form.Control
                           placeholder="Enter description here"
-                          type="password"
+                          type="text"
                           name="description"
                           onChange={(e) => {
                             this.setState((prevState) => ({
-                              loginPayload: {
-                                ...prevState.loginPayload,
+                              expensePayload: {
+                                ...prevState.expensePayload,
                                 description: e.target.value,
                               },
                             }));
@@ -371,7 +391,18 @@ class Overview extends React.Component {
                         padding: "0 10px",
                       }}
                     >
-                      <Button payload={this.state.loginPayload}  title={"SUBMIT ➔"}/>
+                      <Button
+                        title={"SUBMIT ➔"}
+                        onClick={() => {
+                          this.props.dispatch({
+                            type: "CREATING_NEW_EXPENSE",
+                            payload: {
+                              expensePayload: this.state.expensePayload,
+                              authToken: this.state.authToken,
+                            },
+                          });
+                        }}
+                      />
                     </div>
                   </div>
                 </Form>
@@ -379,9 +410,9 @@ class Overview extends React.Component {
             </div>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
 
-export default withRouter(Overview);
+export default connect(mapStateToProps)(withRouter(Overview));

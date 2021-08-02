@@ -85,11 +85,11 @@ export class UserController {
     @Body('password') password: string,
   ) {
     try {
-      const authToken = await this.userService.login(userEmail, password);
+      const authData = await this.userService.login(userEmail, password);
       return {
-        authToken,
-        expiresIn: '10000s',
-        tokenType: 'JWT',
+        authToken: authData.jwtToken,
+        expiresIn: '604800000s',
+        userId: authData.userId
       };
     } catch (error) {
       throw error;
