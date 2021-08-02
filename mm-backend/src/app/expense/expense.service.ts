@@ -6,6 +6,12 @@ import { IExpenseResponse } from './expense.interface';
 export class ExpenseService {
   async createExpense(payload: any): Promise<IExpenseResponse> {
     try {
+      if(!payload.expense_date) {
+        payload.expense_date = new Date();
+      } else {
+        payload.expense_date = new Date(payload.expense_date);
+      }
+
       const expenseData = await Expense.save(payload);
       return this.buildExpenseResponse(expenseData);
     } catch (error) {
@@ -30,7 +36,7 @@ export class ExpenseService {
 
   async getExpenseByUserId(user_id: string): Promise<IExpenseResponse[]> {
     try {
-      const expenseDataArray = await Expense.find({ user_id });
+      const expenseDataArray = await Expense.find({ user_id })
       let expenseResponseArray = [];
       for (const expenseData of expenseDataArray) {
         expenseResponseArray.push(this.buildExpenseResponse(expenseData));
@@ -93,6 +99,7 @@ export class ExpenseService {
       amount: data.amount,
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
+      expense_date: data.expense_date,
     };
   }
 }

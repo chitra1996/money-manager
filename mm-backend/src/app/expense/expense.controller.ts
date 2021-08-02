@@ -27,6 +27,7 @@ export class ExpenseController {
     @Body('classification') classification: string,
     @Body('category_id') category_id: string,
     @Body('amount') amount: string,
+    @Body('expense_date') expense_date: string,
   ): Promise<any> {
     try {
       const payload = {
@@ -35,6 +36,7 @@ export class ExpenseController {
         classification,
         category_id,
         amount,
+        expense_date
       };
       return await this.expenseService.createExpense(payload);
     } catch (error) {

@@ -2,10 +2,6 @@ import React from "react";
 import { colors } from "../../assets/css/colors";
 
 class Button extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { title, onClick } = this.props;
 

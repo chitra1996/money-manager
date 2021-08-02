@@ -32,6 +32,9 @@ export class Expense extends BaseEntity {
   @Column()
   amount: number;
 
+  @Column()
+  expense_date: Date;
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -50,6 +53,7 @@ export class ExpenseDTO {
     public classification: string,
     public category_id: string,
     public amount: number,
+    public expense_date?: Date,
     public createdAt?: Date,
     public deletedAt?: Date,
     public updatedAt?: Date,

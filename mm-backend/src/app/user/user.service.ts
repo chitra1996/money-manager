@@ -99,7 +99,7 @@ export class UserService {
     }
   }
 
-  async login(userEmail: string, userPassword: string): Promise<string> {
+  async login(userEmail: string, userPassword: string): Promise<any> {
     const user = await this.getUserByEmail(userEmail);
     if (!user) {
       throw new NotFoundException(
@@ -114,7 +114,10 @@ export class UserService {
 
     if (passwordMatches) {
       const jwtToken = await this.authService.generateJwt(user);
-      return jwtToken;
+      return {
+        jwtToken,
+        userId: user.user_id
+      };
     }
     throw new UnauthorizedException(
       'uh..oh.. Seems like wrong email or password :(',

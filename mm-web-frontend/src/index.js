@@ -8,12 +8,13 @@ import createSagaMiddleware from "redux-saga";
 
 import MoneyManager from "./screens";
 import { reducer } from "./redux/reducers/reducer";
-import { loggingInUser } from "./redux/sagas/saga";
+import { loggingInUser, creatingExpense } from "./redux/sagas/saga";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(loggingInUser);
+sagaMiddleware.run(creatingExpense);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -67,7 +67,7 @@ class Main extends React.Component {
 
                         {
                             data.map((item, ind) => {
-                                let selected = ind == this.state.selectedTab;
+                                let selected = ind === this.state.selectedTab;
                                 return (
                                     <div
                                         onClick={() => this.setState({ selectedTab: ind })}
@@ -107,7 +107,7 @@ class Main extends React.Component {
                     flex: 10,
                     backgroundColor: colors.bgColor
                 }}>
-                    {selectedTab == 0 ?
+                    {selectedTab === 0 ?
                         <Overview />
                         :
                         <Category />
